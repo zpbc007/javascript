@@ -238,7 +238,36 @@ person1.friends.push('li')
 console.log(person2.friends)    // ['zhao', 'qian', 'sun', 'li']
 ```
 
+### 2.4 组合使用构造函数模式和原型模式
 
+构造函数模式用于定义实例属性，而原型模式用于定义方法和共享的属性。结果，每个实例都会有自己的一份实例属性的副本，但同时又共享着对方法的引用，最大限度地节省了内存。
+
+```
+function Person (name, age, job) {
+    this.name = name
+    this.age = age
+    this.job = job
+    this.friends = ['zhao', 'qian']
+}
+
+Person.prototype = {
+    constructor: Person,
+    sayName: function () {
+        console.log(this.name)
+    }
+}
+
+var person1 = new Person('zp', 25, 'coder')
+var person2 = new Person('lmy', 25, 'lover')
+
+person1.friends.push('li')
+
+console.log(person1.friends)    // ['zhao', 'qian', 'li']
+console.log(person2.friends)    // ['zhao', 'qian']
+
+console.log(person1.friends === person2.friends)    //false
+console.log(person1.sayName === person2.sayName)    // true
+```
 
         
             
