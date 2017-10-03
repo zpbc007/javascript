@@ -216,7 +216,12 @@ Person.prototype = {
 }
 
 friend.sayName()    // error
+
+var newFriend = new Person()
+newFriend.sayName()     // zp
 ```
+
+
         
             
                 
