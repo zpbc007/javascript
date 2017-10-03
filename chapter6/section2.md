@@ -114,12 +114,109 @@ var person2 = new Person()
 
 person1.name = 'greg'
 
-console.log(person1.name)    // greg
-console.log(person2.name)    // zhaopeng
+console.log(person1.name)    // greg -- 来自实例
+console.log(person2.name)    // zhaopeng -- 来自原型
+console.log(person1.hasOwnProperty('name'))    // true
+
+delete person1.name
+console.log(person1.name)     // zhaopeng -- 来自原型
+console.log(person1.hasOwnProperty('name'))    // false
 ```
 
+**hasOwnProperty()**方法可以用来检测一个属性是存在于实例中还是原型中
 
+#### 2.3.2 原型与in操作符
 
+有两种方式使用in操作符：单独使用和在for-in中使用。
+单独使用时如果属性在对象中能够访问到返回true无论是在原型中还是实例中。
+使用for-in循环时，循环的时可枚举属性。
+要取得对象上所有可枚举的实例属性，可以使用**Object.keys()**方法。
+**Object.getOwnProptertyNames()**取得所有实例属性，无论是否可枚举。
+
+#### 2.3.3 更简单的原型语法
+
+```
+function Person () {}
+
+Person.prototype = {
+    name: 'zhaopeng',
+    age: '25',
+    job: 'coder'
+    sayName: function () {
+        console.log(this.name)
+    }
+}
+```
+
+_此时prototype的constructor属性不再指向Person，因为我们创建了一个新的字面量对象覆盖了原来的prototype，此时的constructor属性指向Object_。因此可以指定constructor属性
+
+```
+function Person () {}
+
+Person.prototype = {
+    constructor: Person,
+    name: 'zhaopeng',
+    age: '25',
+    job: 'coder'
+    sayName: function () {
+        console.log(this.name)
+    }
+}
+```
+
+但是此时的constructor属性的[[Enumerable]]特性为true，而原生的constructor属性是false的。
+
+```
+function Person () {}
+
+Person.prototype = {
+    name: 'zhaopeng',
+    age: '25',
+    job: 'coder'
+    sayName: function () {
+        console.log(this.name)
+    }
+}
+
+Object.defineProperty(Person.prototype, 'constructor', {
+    enumerable: false,
+    value: Person
+})
+```
+
+#### 2.3.4 原型的动态性
+
+对原型对象所做的任何修改都能够立刻从实例上反映出来
+
+```
+var friend = new Person()
+
+Person.prototype.sayHi = function () {
+    console.log('hi')
+}
+
+friend.sayHi()    // hi
+```
+
+但是如果重写了整个原型对象，实例中访问的还是重写之前的原型，新建的实例才能够访问到重写的原型。
+
+```
+function Person () {}
+
+var friend = new Person()
+
+Person.prototype = {
+    constructor: Person,
+    name: 'zp',
+    age: '25',
+    job: 'coder',
+    sayName: function () {
+        console.log(this.name)
+    }
+}
+
+friend.sayName()    // error
+```
         
             
                 
