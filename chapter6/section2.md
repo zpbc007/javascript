@@ -271,9 +271,71 @@ console.log(person1.sayName === person2.sayName)    // true
 
 ### 2.5 动态原型模式
 
-之前构造函数与原型是独立开来的，动态原型把所有的信息封装在构造函数中， 在构造函数中初始化原型        
-            
-                
+之前构造函数与原型是独立开来的，动态原型把所有的信息封装在构造函数中，在构造函数中初始化原型
+
+```
+function Person (name, age, job) {
+    // 属性
+    this.name = name
+    this.age = age
+    this.job = job
+    
+    // 方法 只会在构造函数第一次调用时执行 不能使用对象字面量重写原型
+    if (typeof this.sayName != 'function') {
+        Person.prototype.sayName = function () {
+            console.log(this.name)
+        }    
+    }
+}
+
+var person = new Person('zp', 25, 'coder')
+person.sayName()    // zp
+```
+
+### 2.6 寄生构造模式
+
+创建一个函数，该函数的作用仅仅是封装创建对象的代码，然后再返回创建的新对象
+
+```
+function Person (name, age, job) {
+    var o = new Object()
+    
+    o.name = name
+    o.age = age
+    o.job = job
+    
+    o.sayName = function () {
+        console.log(this.name)
+    }
+    
+    return o
+}
+
+var person = new Person('zp', 25, 'coder')
+person.sayName()    // zp
+```              
+
+这个模式可以在特殊的情况下用来为对象创建构造函数。
+假设需要创建一个具有额外方法的特殊数组。由于不能直接修改Array构造函数，因此可以使用这个模式
+
+```
+function SpecialArray() {
+    // 创建数组
+    var values = new Array()
+    
+    // 添加值
+    values.push.apply(values, arguments)
+    
+    // 添加方法
+    values.toPipedString = function () {
+        return this.join("|")
+    }
+    
+    return values
+}
+var colors = new SpecialArray('red', 'blue')
+console.log(colors)
+```  
                     
                         
                             
