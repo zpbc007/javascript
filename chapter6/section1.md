@@ -48,3 +48,91 @@
     console.log(book.edition)
     ```
     
+3. 定义多个属性
+
+    **Object.defineProperties**
+    
+    ```
+    var book = {}
+    
+    Object.defineProperties(book, {
+        _year: {
+            writable: true,
+            value: 2004
+        },
+        edition: {
+            writable: false,
+            value: 2
+        },
+        year: {
+            get: function () {
+                return this._year
+            }
+        }
+    })
+    ```
+    
+4. 读取属性的特性
+
+    **Object.getOwnPropertyDescriptor()**,返回一个对象，如果为数据属性，返回数据属性的4个值，如果为访问器属性，返回访问器的4个值
+    
+    ```
+    var book = {}
+    Object.defineProperties(book, {
+        _year: {
+            value: 2004
+        },
+        edition: {
+            value: 1
+        },
+        year: {
+            get: function () {
+                return this._year
+            },
+            set: function (newValue) {
+                if (newValue > 2004) {
+                    this._year = newValue
+                    this.edtion += newValue -2004                
+                }
+            }
+        }
+    })
+    
+    var descriptor = Object.getOwnPropertyDescriptor(book, '_year')
+    console.log(descriptor)
+    ```
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
