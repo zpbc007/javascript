@@ -269,7 +269,9 @@ console.log(person1.friends === person2.friends)    //false
 console.log(person1.sayName === person2.sayName)    // true
 ```
 
-        
+### 2.5 动态原型模式
+
+之前构造函数与原型是独立开来的，动态原型把所有的信息封装在构造函数中， 在构造函数中初始化原型        
             
                 
                     
