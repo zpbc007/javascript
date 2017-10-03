@@ -221,6 +221,24 @@ var newFriend = new Person()
 newFriend.sayName()     // zp
 ```
 
+#### 2.3.5 原型对象的问题
+
+1. 忽略了为构造函数传递参数的环节，所有实例默认情况下都是相同的
+2. 原型上所有的属性都是共享的，属性为函数或者基本值还好，但是如果属性保存的时引用值，所有实例对它的更改都会影响到其他实例
+
+```
+function Person () {}
+
+Person.prototype.friends = ['zhao', 'qian', 'sun']
+
+var person1 = new Person()
+var person2 = new Person()
+
+person1.friends.push('li')
+console.log(person2.friends)    // ['zhao', 'qian', 'sun', 'li']
+```
+
+
 
         
             
