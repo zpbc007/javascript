@@ -323,7 +323,7 @@ function SpecialArray() {
     // 创建数组
     var values = new Array()
     
-    // 添加值
+    // 添加值 使用apply是因为arguments为一个数组,也可以用...代替
     values.push.apply(values, arguments)
     
     // 添加方法
