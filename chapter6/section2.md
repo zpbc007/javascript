@@ -341,9 +341,30 @@ console.log(colors)
 
 ### 2.7 稳妥构造函数模式
 
+**稳妥对象**: 没有公共属性，而且其方法也不引用this对象。
 
-                    
-                        
+```
+function Person (name, age, job) {
+    // 创建要返回的对象
+    var o = new Object()
+
+    // 添加私有变量和函数
+
+    // 添加方法
+    o.sayName = function () {
+        console.log(name)
+    }
+
+    return o
+}
+
+var friend = Person('zp', 25, 'coder')
+friend.sayName()    // zp
+```
+
+**除了使用sayName()方法之外没有其他办法访问name的值**
+
+
                             
                                 
                                     
