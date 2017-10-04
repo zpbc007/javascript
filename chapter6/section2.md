@@ -336,6 +336,8 @@ function SpecialArray() {
 var colors = new SpecialArray('red', 'blue')
 console.log(colors)
 ```  
+
+注意：**返回的对象与构造函数或者与构造函数的原型属性之间没有关系，与在构造函数外部创建的对象是一样的，因此不能通过instanceof判断对象类型**
                     
                         
                             
